@@ -29,9 +29,9 @@ echo "Current user: uid=1000(admin_) gid=1000(admin_) groups=1000(admin_),4(adm)
   echo "Installing python packages" >> /tmp/notebook_config.log 2&1
   su - jupyter -c "pip install --trusted-host pypi.org     --trusted-host pypi.python.org --trusted-host     files.pythonhosted.org pip setuptools" >> /tmp/notebook_config.log 2>&1
   su - jupyter -c "pip install --upgrade --no-warn-conflicts --no-warn-script-location --user       google-cloud-bigquery       google-cloud-pipeline-components       google-cloud-aiplatform       seaborn       kfp" >> /tmp/notebook_config.log 2>&1
-  sudo git clone https://github.com/GCP-Architecture-Guides/CSA-Model-Armor.git
-  cp CSA-Model-Armor/module_ma/assets/*.ipynb /home/jupyter/
+  sudo git clone https://github.com/GCP-Architecture-Guides/model-armor-poc.git
+  cp model-armor-poc/module_ma/assets/*.ipynb /home/jupyter/
   sudo rm notebook_template.ipynb 
-  sudo rm CSA-Model-Armor -r -f
+  sudo rm model-armor-poc -r -f
 
  
