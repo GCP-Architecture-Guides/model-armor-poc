@@ -18,11 +18,12 @@
 
 
 module "module_ma" {
-  source             = "./module_ma"
-  ma_project_id      = var.ma_project_id
-  network_region     = var.network_region
-  vpc_dmz_subnetwork = var.vpc_dmz_subnetwork
-  roles              = var.roles
-  ma_dlp_roles       = var.ma_dlp_roles
-  vertex_insance_owner = var.vertex_insance_owner
+  source               = "./module_ma"
+  ma_project_id        = var.ma_project_id
+  network_region       = var.network_region
+  vpc_dmz_subnetwork   = var.vpc_dmz_subnetwork
+  roles                = var.roles
+  ma_dlp_roles         = var.ma_dlp_roles
+  vertex_instance_owner = var.vertex_instance_owner
+
 }
