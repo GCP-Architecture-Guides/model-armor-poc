@@ -35,8 +35,8 @@ Policy Administrator
 Clone this github repository go to the root of the repository.
 
 ``` 
-git clone https://github.com/GCP-Architecture-Guides/CSA-Model-Armor.git
-cd CSA-Model-Armor
+git clone https://github.com/GCP-Architecture-Guides/model-armor-poc.git
+cd model-armor-poc
 ```
 
 ### 3. Deploy the infrastructure using Terraform
