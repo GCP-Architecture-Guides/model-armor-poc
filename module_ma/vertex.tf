@@ -1,4 +1,4 @@
-##  Copyright 2025 Google LLC
+##  Copyright 2023 Google LLC
 ##  
 ##  Licensed under the Apache License, Version 2.0 (the "License");
 ##  you may not use this file except in compliance with the License.
@@ -22,9 +22,9 @@
 
 
 resource "google_workbench_instance" "ma_veretx_instance" {
-  name = "ma-workbench-instance"
+  name     = "ma-workbench-instance"
   location = "${var.network_region}-a"
-    project     = var.ma_project_id
+  project  = var.ma_project_id
 
 
   gce_setup {
@@ -33,14 +33,14 @@ resource "google_workbench_instance" "ma_veretx_instance" {
       project = "cloud-notebooks-managed"
       family  = "workbench-instances"
     }
-   # accelerator_configs {
+    # accelerator_configs {
     #  type         = "NVIDIA_TESLA_T4"
     #  core_count   = 1
     #}
 
     shielded_instance_config {
-      enable_secure_boot = true
-      enable_vtpm = true
+      enable_secure_boot          = true
+      enable_vtpm                 = true
       enable_integrity_monitoring = true
     }
 
@@ -48,44 +48,44 @@ resource "google_workbench_instance" "ma_veretx_instance" {
     disable_public_ip = true
 
     service_accounts {
-      email = "${google_service_account.www.email}"
+      email = google_service_account.www.email
     }
 
     boot_disk {
-      disk_size_gb  = 200
-      disk_type = "PD_SSD"
-  #    disk_encryption = "CMEK"
- #     kms_key = "my-crypto-key"
+      disk_size_gb = 200
+      disk_type    = "PD_SSD"
+      #    disk_encryption = "CMEK"
+      #     kms_key = "my-crypto-key"
     }
 
     data_disks {
-      disk_size_gb  = 200
-      disk_type = "PD_SSD"
- #     disk_encryption = "CMEK"
- #     kms_key = "my-crypto-key"
+      disk_size_gb = 200
+      disk_type    = "PD_SSD"
+      #     disk_encryption = "CMEK"
+      #     kms_key = "my-crypto-key"
     }
 
     network_interfaces {
-      network = google_compute_network.vpc_dmz.id
-      subnet = google_compute_subnetwork.subnet_dmz.id
+      network  = google_compute_network.vpc_dmz.id
+      subnet   = google_compute_subnetwork.subnet_dmz.id
       nic_type = "GVNIC"
-    #  access_configs {
-     #   external_ip = google_compute_address.static.address
-    #  }
+      #  access_configs {
+      #   external_ip = google_compute_address.static.address
+      #  }
     }
 
     metadata = {
-      terraform = "true"
-      PROJ_ID                    = var.ma_project_id
-      LOCATION = var.network_region
+      terraform                    = "true"
+      PROJ_ID                      = var.ma_project_id
+      LOCATION                     = var.network_region
       post-startup-script          = "gs://${google_storage_bucket.start_up_bucket.name}/install_script.sh"
-    post-startup-script-behavior = "download_and_run_every_start"
-    idle-timeout-seconds         = 3600
-    notebook-disable-root        = true
-    notebook-upgrade-schedule    = "00 19 * * SAT"
+      post-startup-script-behavior = "download_and_run_every_start"
+      idle-timeout-seconds         = 3600
+      notebook-disable-root        = true
+      notebook-upgrade-schedule    = "00 19 * * SAT"
     }
 
-   # enable_ip_forwarding = true
+    # enable_ip_forwarding = true
 
     tags = ["vertex", "model-armor"]
 
@@ -93,19 +93,18 @@ resource "google_workbench_instance" "ma_veretx_instance" {
 
   disable_proxy_access = "false"
 
-  instance_owners  = var.vertex_insance_owner
-
+  instance_owners = var.vertex_instance_owner
   labels = {
     k = "model-armor"
   }
 
   desired_state = "ACTIVE"
 
-depends_on = [
-google_storage_bucket_object.start_up_notebook,
-google_compute_router_nat.cloud_nat_dmz,
-time_sleep.wait_enable_service_api,
-]
+  depends_on = [
+    google_storage_bucket_object.start_up_notebook,
+    google_compute_router_nat.cloud_nat_dmz,
+    time_sleep.wait_enable_service_api,
+  ]
 
 }
 
